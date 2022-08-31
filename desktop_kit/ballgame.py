@@ -1,13 +1,20 @@
 import random
 import time
 from aip_speech_text import get_speech_from_text
-
-
+import soundAPI
 import pygame
+import os
 
 class Jieqiu(object):
 
 	def __init__(self):
+		folder = os.path.dirname(os.path.abspath("__file__"))
+		# 初始化背景音乐, 方式一 pygame mixer播放，支持多类型音频
+		theme_file = os.path.join(folder, "sound", '人生最美初见时.mp3')
+		soundAPI.music_effectsDispatcher(theme_file)
+		# 初始化背景音乐, 方式二 playsound2播放，支持音频少，轻量化
+		# theme_file = os.path.join(folder, "sound", 'theme.mp3')
+		# soundAPI.audio_effectsDispatcher(theme_file)
 
 		#初始化pygamee
 		pygame.init()
@@ -70,6 +77,10 @@ class Jieqiu(object):
 					move_y-=1
 			elif ball_y>=480 and (ball_x<=mouse_x-20 or ball_x>=mouse_x+120):
 				self.result = '您的游戏得分为%s分'%str(score)
+				folder = os.path.dirname(os.path.abspath("__file__"))
+				gameOver_file = os.path.join(folder, "sound", 'gameover.wav')
+				soundAPI.audio_effectsDispatcher(gameOver_file)
+				time.sleep(2)
 				break
 			pygame.display.update()
 
@@ -80,6 +91,6 @@ class Jieqiu(object):
 
 if __name__ == '__main__':
 	jieqiu=Jieqiu()
-	jieqiu.final_score()
+	# jieqiu.final_score()
 
 
